@@ -1,0 +1,986 @@
+//constructing binary search tree through sorted array
+import java.util.*;
+class BinarySearchTree
+{
+	class Node
+	{
+		Node left;
+		Node right;
+		int data;
+		public Node(int data)
+		{
+			this.data=data;
+		}
+	}
+	Node root;
+	public BinarySearchTree(int a[])
+	{
+		this.root=constructTree(a,0,a.length-1);
+	}
+	public Node constructTree(int a[],int lo,int hi)
+	{
+		if(lo>hi)
+		{
+			return null;
+		}
+		int mid=(lo+hi)/2;
+		Node n1=new Node(a[mid]);
+		n1.left=constructTree(a,lo,mid-1);
+		n1.right=constructTree(a,mid+1,hi);
+		return n1;
+	}
+	public void display()
+	{
+		display(this.root);
+	}
+	public void display(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		String str="";
+		if(n1.left!=null)
+		{
+			str=str+n1.left.data+"=>";
+		}
+		else
+		{
+			str=str+"null"+"=>";
+		}
+		str=str+n1.data;
+		if(n1.right!=null)
+		{
+			str=str+"<="+n1.right.data;
+		}
+		else
+		{
+			str=str+"<="+"null";
+		}
+		System.out.println(str);
+		if(n1.left!=null)
+		{
+			display(n1.left);
+		}
+		if(n1.right!=null)
+		{
+			display(n1.right);
+		}
+	}
+	public void preOrder()
+	{
+		System.out.println("preorder traversal is:");
+		preOrder(this.root);
+	}
+	public void preOrder(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		System.out.print(n1.data+" ");
+		preOrder(n1.left);
+		preOrder(n1.right);
+	}
+	public void postOrder()
+	{
+		System.out.println("postOrder traversal is:");
+		postOrder(this.root);
+	}
+	public void postOrder(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		postOrder(n1.left);
+		postOrder(n1.right);
+		System.out.print(n1.data+" ");
+	}
+	public void inOrder()
+	{
+		System.out.println("in order traversal is: ");
+		inOrder(this.root);
+	}
+	public void inOrder(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		inOrder(n1.left);
+		System.out.print(n1.data+" ");
+		inOrder(n1.right);
+	}
+	public void levelOrder()
+	{
+		levelOrder(this.root);
+	}
+	public void levelOrder(Node n1)
+	{
+        if(n1==null)
+        {
+        	return;
+        }
+        LinkedList<Node> l1=new LinkedList<Node>();
+        l1.add(n1);
+        while(!l1.isEmpty())
+        {
+        	Node m1=l1.removeFirst();
+        	System.out.print(m1.data+" ");
+        	if(m1.left!=null)
+            {
+            	l1.add(m1.left);
+            }
+            if(m1.right!=null)
+            {
+            	l1.add(m1.right);
+            }
+        }
+	}
+	public void levelOrder2()
+	{
+		levelOrder2(this.root);
+	}
+	public void levelOrder2(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+            while(x>0)
+            {
+               Node m1=l1.removeFirst();
+               System.out.print(m1.data+" ");
+               if(m1.left!=null)
+               {
+               	l1.add(m1.left);
+               }
+               if(m1.right!=null)
+               {
+               	l1.add(m1.right);
+               }
+               x--;
+            }
+            System.out.println("");
+		}
+	}
+	public void leftView()
+	{
+		leftView(this.root);
+	}
+	public void leftView(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+			int p=x;
+			while(x>0)
+			{
+				Node m1=l1.removeFirst();
+				if(x==p)
+				{
+					System.out.print(m1.data+" ");
+				}
+				if(m1.left!=null)
+				{
+					l1.add(m1.left);
+				}
+				if(m1.right!=null)
+				{
+					l1.add(m1.right);
+				}
+				x--;
+			}
+			System.out.println("");
+		}
+	}
+	public void rightView()
+	{
+		rightView(this.root);
+	}
+	public void rightView(Node n1)
+	{
+		if(n1==null){
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				return;
+			}
+			while(x>0)
+			{
+				Node m1=l1.removeFirst();
+				if(x==1)
+				{
+                   System.out.print(m1.data);
+				}
+				if(m1.left!=null)
+				{
+					l1.add(m1.left);
+				}
+				if(m1.right!=null)
+				{
+					l1.add(m1.right);
+				}
+				x--;
+			}
+			System.out.println("");
+		}
+	}
+	public boolean findInBst(int item)
+	{
+		return findInBst(this.root,item);
+	}
+	public boolean findInBst(Node n1,int item)
+	{
+		if(n1==null)
+		{
+			return false;
+		}
+		if(n1.data==item)
+		{
+			return true;
+		}
+		if(item<n1.data)
+		{
+			return findInBst(n1.left,item);
+		}
+		else
+		{
+			return findInBst(n1.right,item);
+		}
+	}
+	public void findInBstPrintSubTree(int item)
+	{
+       findInBstPrintSubTree(this.root,item);
+	}
+	public void findInBstPrintSubTree(Node n1,int item)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		if(n1.data==item)
+		{
+			display(n1);
+		}
+		if(item<n1.data)
+		{
+			findInBstPrintSubTree(n1.left,item);
+		}
+		else
+		{
+			findInBstPrintSubTree(n1.right,item);
+		}
+	}
+	public int findMax()
+	{
+		return findMax(this.root);
+	}
+	public int findMax(Node n1)
+	{
+		if(n1==null)
+		{
+			return -1;
+		}
+		if(n1.right!=null)
+		{
+			return findMax(n1.right);
+		}
+		return n1.data;
+	}
+	public int findMin()
+	{
+		return findMin(this.root);
+	}
+	public int findMin(Node n1)
+	{
+		if(n1==null)
+		{
+			return -1;
+		}
+		if(n1.left!=null)
+		{
+			return findMin(n1.left);
+		}
+		return n1.data;
+	}
+	public void insertInBst(int item)
+	{
+		insertInBst(this.root,item);
+	}
+	public void insertInBst(Node n1,int item)
+	{
+		if(n1==null)
+		{
+			this.root=new Node(item);
+            root.left=null;
+            root.right=null;
+			return;
+		}
+		if(item<n1.data)
+		{
+			if(n1.left==null)
+		    {
+		     Node n11=new Node(item);
+            n11.left=null;
+            n11.right=null;
+            n1.left=n11;
+            return;
+		    }
+		    else
+		    {
+             insertInBst(n1.left,item);
+		    }
+		}
+		if(item>n1.data)
+		{
+			if(n1.right==null)
+		    {
+				Node n11=new Node(item);
+				n11.left=null;
+                n11.right=null;
+                n1.right=n11;
+                return;
+		    }
+		    else
+		    {
+              insertInBst(n1.right,item);
+		    }
+		}
+
+	}
+	public void delEleinBst(int item)
+	{
+		delEleinBst(this.root,null,item,false);
+	}
+	public void delEleinBst(Node n1,Node parent,int item,boolean islc)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		if(item<n1.data)
+		{
+			delEleinBst(n1.left,n1,item,true);
+		}
+		else if(item>n1.data)
+		{
+			delEleinBst(n1.right,n1,item,false);
+		}
+		else
+		{
+			if(n1.left==null && n1.right==null)
+			{
+               if(islc)
+               {
+                  parent.left=null;
+               }
+               else
+               {
+                  parent.right=null;
+               }
+			}
+			else if(n1.left!=null && n1.right==null)
+			{
+                if(islc)
+                {
+                   parent.left=n1.left;
+                }
+                else
+                {
+                   parent.right=n1.left;
+                }
+			}
+			else if(n1.left==null && n1.right!=null)
+			{
+                 if(islc)
+                 {
+                    parent.left=n1.right;
+                 }
+                 else
+                 { 
+                    parent.right=n1.right;
+                 }
+			}
+			else
+			{
+                int max=findMax(n1.left);
+                n1.data=max;
+                delEleinBst(n1.left,n1,max,true);
+			}
+		}
+	}
+	public int findHeight()
+	{
+		return findHeight(this.root);
+	}
+	public int findHeight(Node n1)
+	{
+		if(n1==null)
+		{
+			return -1;
+		}
+		int lh=findHeight(n1.left);
+		int rh=findHeight(n1.right);
+		int h=Math.max(lh,rh)+1;
+		return h;
+	}
+	public boolean isBalancedBst()
+	{
+		return isBalancedBst(this.root);
+	}
+	public boolean isBalancedBst(Node n1)
+	{
+		if(n1==null)
+		{
+			return true;
+		}
+		int lh=findHeight(n1.left);
+		int rh=findHeight(n1.right);
+		if(Math.abs(lh-rh)<=1 && isBalancedBst(n1.left) && isBalancedBst(n1.right))
+		{
+			return true;
+		}
+		return false;
+	}
+	public void fillList(Node n1,ArrayList<Integer> a1)
+	{
+		if(n1.left!=null)
+		{
+			fillList(n1.left,a1);
+		}
+		a1.add(n1.data);
+		if(n1.right!=null)
+		{
+		    fillList(n1.right,a1);
+		}
+	}
+	public int kthLargest(int k)
+	{
+		return kthLargest(this.root,k);
+	}
+	public int kthLargest(Node n1,int k)
+	{
+		if(n1==null)
+		{
+			return 0;
+		}
+		ArrayList<Integer> a1=new ArrayList<Integer>();
+		fillList(n1,a1);
+		int index=(a1.size()-k);
+		return a1.get(index);
+	}
+	public int kthSmallest(int k)
+	{
+		return kthSmallest(this.root,k);
+	}
+	public int kthSmallest(Node n1,int k)
+	{
+		if(n1==null)
+		{
+			return 0;
+		}
+		ArrayList<Integer> a1=new ArrayList<Integer>();
+		fillList(n1,a1);
+		int index=k-1;
+		return a1.get(index);
+	}
+	public void sumOfLeafNodes()
+	{
+		sumOfLeafNodes(this.root);
+	}
+	static int sum=0;
+	public void sumOfLeafNodes(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		if(n1.left==null && n1.right==null)
+		{
+			sum=sum+n1.data;
+		}
+		sumOfLeafNodes(n1.left);
+		sumOfLeafNodes(n1.right);
+	}
+	public void sumOfNodesAtEachLevel()
+	{
+		sumOfNodesAtEachLevel(this.root);
+	}
+	public void sumOfNodesAtEachLevel(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+			int sum=0;
+			while(x>0)
+            {
+            	Node m1=l1.removeFirst();
+            	sum=sum+m1.data;
+            	if(x==1)
+            	{
+            		System.out.print(sum);
+            	}
+            	if(m1.left!=null)
+            	{
+            		l1.add(m1.left);
+            	}
+            	if(m1.right!=null)
+            	{
+            		l1.add(m1.right);
+            	}
+            	x--;
+            }
+            System.out.println("");
+		}
+	}
+	public Node leastCommAncestor(int item1,int item2)
+	{
+		return leastCommAncestor(this.root,item1,item2);
+	}
+	public Node leastCommAncestor(Node n1,int item1,int item2)
+	{
+		if(n1==null)
+		{
+			return null;
+		}
+		if(n1.data==item1 || n1.data==item2)
+		{
+			return n1;
+		}
+		Node leftlca=leastCommAncestor(n1.left,item1,item2);
+		Node rightlca=leastCommAncestor(n1.right,item1,item2);
+		if(leftlca!=null && rightlca!=null)
+		{
+			return n1;
+		}
+		return (leftlca!=null) ? leftlca:rightlca;
+	}
+	public int findDiameter()
+	{
+		return findDiameter(this.root);
+	}
+	public int findDiameter(Node n1)
+	{
+		if(n1==null)
+		{
+			return 0;
+		}
+		int lh=findHeight(n1.left);
+		int rh=findHeight(n1.right);
+
+		int ld=findDiameter(n1.left);
+	     int rd=findDiameter(n1.right);
+      
+		return Math.max((lh+rh+2),Math.max(ld,rd));
+	}
+	public void nodesAtLevelK(int k)
+	{
+		nodesAtLevelK(this.root,k);
+	}
+	public void nodesAtLevelK(Node n1,int k)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		int level=0;
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+			level++;
+			while(x>0)
+			{
+				Node m1=l1.removeFirst();
+				if(level==k)
+				{
+                   System.out.print(m1.data+" ");
+				}
+				if(m1.left!=null)
+				{
+					l1.add(m1.left);
+				}
+				if(m1.right!=null)
+				{
+					l1.add(m1.right);
+				}
+				x--;
+			}
+			System.out.println("");
+		}
+	}
+	public int sumOfNodesAtLevelK(int k)
+	{
+		return sumOfNodesAtLevelK(this.root,k);
+	}
+	public int sumOfNodesAtLevelK(Node n1,int k)
+	{
+		if(n1==null)
+		{
+			return 0;
+		}
+        int level=0;
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		int sum=0;
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+			level++;
+			while(x>0)
+			{
+				Node m1=l1.removeFirst();
+				if(level==k)
+				{
+                   sum=sum+m1.data;
+				}
+				if(m1.left!=null)
+				{
+					l1.add(m1.left);
+				}
+				if(m1.right!=null)
+				{
+					l1.add(m1.right);
+				}
+				x--;
+			}
+		}
+		return sum;
+	}
+	public void printNodesWithoutSibling()
+	{
+		printNodesWithoutSibling(this.root);
+	}
+	public void printNodesWithoutSibling(Node n1)
+	{
+		if(n1==null)
+	    {
+	    	return;
+	    }
+	    LinkedList<Node> l1=new LinkedList<Node>();
+	    l1.add(n1);
+	    while(true)
+	    {
+	    	int x=l1.size();
+	    	if(x==0)
+	    	{
+	    		break;
+	    	}
+	    	while(x>0)
+	    	{
+	    		Node m1=l1.removeFirst();
+	    		if(m1.left==null && m1.right!=null)
+	    		{
+	    			System.out.print(m1.right.data+" ");
+	    		}
+	    		if(m1.left!=null && m1.right==null)
+	    		{
+	    			System.out.print(m1.left.data+" ");
+	    		}
+	    		if(m1.left!=null)
+	    		{
+	    			l1.add(m1.left);
+	    		}
+	    		if(m1.right!=null)
+	    		{
+	    			l1.add(m1.right);
+	    		}
+	    		x--;
+	    	}
+	   
+	    }
+	}
+
+	public void depthOfEachNodeFromRoot()
+	{
+		depthOfEachNodeFromRoot(this.root);
+	}
+	public void depthOfEachNodeFromRoot(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		HashMap<Integer,Integer> h1=new HashMap<Integer,Integer>();
+		int level=-1;
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				break;
+			}
+			level++;
+			while(x>0)
+			{
+				Node m1=l1.removeFirst();
+				h1.put(m1.data,level);
+				if(m1.left!=null)
+				{
+					l1.add(m1.left);
+				}
+				if(m1.right!=null)
+				{
+					l1.add(m1.right);
+				}
+				x--;
+			}
+		}
+        for(Map.Entry p1:h1.entrySet())
+        {
+        	System.out.println(p1.getKey()+"==>"+p1.getValue());
+        }
+	}
+	public void zigzagLevelOrderTraversal()
+	{
+		zigzagLevelOrderTraversal(this.root);
+	}
+	public void zigzagLevelOrderTraversal(Node n1)
+	{
+		if(n1==null)
+		{
+			return;
+		}
+		LinkedList<Node> l1=new LinkedList<Node>();
+		l1.add(n1);
+		int level=0;
+		while(true)
+		{
+			int x=l1.size();
+			if(x==0)
+			{
+				return;
+			}
+			level++;
+			while(x>0)
+			{
+				if(level%2!=0)
+				{
+                   Node m1=l1.removeFirst();
+                   System.out.print(m1.data+" ");
+                   if(m1.left!=null)
+                   {
+                   	l1.add(m1.left);
+                   }
+                   if(m1.right!=null)
+                   {
+                   	l1.add(m1.right);
+                   }
+				}
+				else
+				{
+                   	Node m1=l1.removeLast();
+                   	System.out.print(m1.data+" ");
+                   	if(m1.right!=null)
+                   	{
+                   		l1.addFirst(m1.right);
+                   	}
+                   	if(m1.left!=null)
+                   	{
+                       l1.addFirst(m1.left);
+                   	}			
+                }
+                x--;
+			}
+			System.out.println("");
+		}
+	}
+	public void printPathsBetweenRootAndLeaf()
+	{
+		printPathsBetweenRootAndLeaf(this.root,"");
+	}
+	public void printPathsBetweenRootAndLeaf(Node n1,String str)
+	{
+       if(n1==null)
+       {
+       	return;
+       }
+       String key=String.valueOf(n1.data);
+       if(n1.left==null && n1.right==null)
+       {
+       	 str=str+key;
+       	 System.out.println(str);
+       	 return;
+       }
+       printPathsBetweenRootAndLeaf(n1.left,str+key+"=>");
+       printPathsBetweenRootAndLeaf(n1.right,str+key+"=>");
+	}
+    public void printPathBetweenTwoNodes(int item1,int item2)
+    {
+    	printPathBetweenTwoNodes(this.root,item1,item2,"");
+    }
+    public void printPathBetweenTwoNodes(Node n1,int item1,int item2,String str)
+    {
+    	if(n1==null)
+    	{
+    		return;
+    	}
+        String key=String.valueOf(n1.data);
+        if(n1.data==item2)
+        {
+        	str=str+key;
+        	System.out.println(str);
+        	return;
+        }
+        printPathBetweenTwoNodes(n1.left,item1,item2,str+key+"=>");
+        printPathBetweenTwoNodes(n1.right,item1,item2,str+key+"=>");
+    }
+    public void printMaximumSumBetweenRootAndLeaf()
+    {
+    	int sum=printMaximumSumBetweenRootAndLeaf(this.root);
+    	System.out.println("maximum sum is: "+sum);
+    	System.out.println("maximum sum path is");
+    	printpathWithSum(this.root,sum);
+    }
+    public int  printMaximumSumBetweenRootAndLeaf(Node n1)
+    {
+        if(n1==null)
+        {
+        	return 0;
+        }
+        int leftmax=printMaximumSumBetweenRootAndLeaf(n1.left);
+        int rightmax=printMaximumSumBetweenRootAndLeaf(n1.right);
+
+        return Math.max(leftmax,rightmax)+n1.data;
+    }
+    public boolean printpathWithSum(Node n1,int sum)
+    {
+    	if(sum==0)
+    	{
+    		return true;
+    	}
+    	if(n1==null)
+    	{
+    		return false;
+    	}
+    	boolean left1=printpathWithSum(n1.left,(sum-n1.data));
+    	boolean right1=printpathWithSum(n1.right,(sum-n1.data));
+    	if(left1 || right1)
+    	{
+    		System.out.print(n1.data+" ");
+    	}
+    	return left1||right1;
+    }
+}
+
+class Kommi
+{
+	public static void main(String args[])
+	{
+		Scanner obj=new Scanner(System.in);
+		int n1=obj.nextInt();
+		int a[]=new int [n1];
+		for(int i=0;i<n1;i++)
+		{
+			a[i]=obj.nextInt();
+		}
+		BinarySearchTree tree=new BinarySearchTree(a);
+		// tree.display();
+		tree.preOrder();
+	 System.out.println("");
+		// tree.postOrder();
+		// System.out.println("");
+	     tree.inOrder();
+		// //level order traversal of a bst is its ascending order
+		// System.out.println("");
+		// System.out.println("level order traversal is: ");
+		// tree.levelOrder();
+		 System.out.println("");
+    System.out.println("segment wise level order traversal is: ");
+	 tree.levelOrder2();
+		// System.out.println("left view of the tree is: ");
+		// tree.leftView();
+		// System.out.println("right view of the tree is: ");
+		// tree.rightView();
+		//System.out.println("item present in bst: "+tree.findInBst(10));
+		// System.out.println("subtree is: ");
+		// tree.findInBstPrintSubTree(10);
+		//System.out.println("maximum element in bst is: "+tree.findMax());
+		//System.out.println("minimum element in bst is: "+tree.findMin());
+
+	     // tree.insertInBst(5);
+	     // tree.insertInBst(90);
+		// System.out.println("after inserting ");
+		// tree.display();
+      
+		
+		// System.out.println("after deleting");
+		// tree.delEleinBst(60);
+		// tree.display();
+
+		//System.out.println("height of bst is: "+tree.findHeight());
+		//System.out.println("is tree balanced:"+tree.isBalancedBst());
+
+		//System.out.println("4th largest element in th bst is: "+tree.kthLargest(4));
+        //System.out.println("5th smallest element in th bst is: "+tree.kthSmallest(5));
+        // tree.sumOfLeafNodes();
+        // System.out.println("sum of leaf nodes of bst is: "+tree.sum);
+        // System.out.println("sum of nodes at each level");
+        // tree.sumOfNodesAtEachLevel();
+        
+        // System.out.println("least common ancestor is: "+tree.leastCommAncestor(40,10).data);
+        // System.out.println("diameter of the bst is: "+tree.findDiameter());
+        // System.out.println("node at level 3 are: ");
+        // tree.nodesAtLevelK(3);
+        
+        //System.out.println("sum of nodes at level 1: "+tree.sumOfNodesAtLevelK(1));
+
+       // tree.printNodesWithoutSibling();
+
+		// tree.depthOfEachNodeFromRoot();
+       
+  //      tree.zigzagLevelOrderTraversal();
+       //tree.printPathBetweenTwoNodes(40,50);
+       //tree.printPathsBetweenRootAndLeaf();
+       // tree.printMaximumSumBetweenRootAndLeaf();
+
+	}
+}
